@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.so
+target/
+Cargo.lock
+.env
+.vscode/
+.idea/
+*.log
+.DS_Store
