@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  app:
+    build: .
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 256M
