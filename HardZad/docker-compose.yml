@@ -1,9 +1,33 @@
 version: '3.9'
+
 services:
-  app:
-    build: .
+  writer:
+    build: ./writer
+    volumes:
+      - shared_data:/data
+    healthcheck:
+      test: ["CMD", "test", "-f", "/data/shared.txt"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     deploy:
       resources:
         limits:
-          cpus: '1.0'
-          memory: 256M
+          cpus: '0.5'
+          memory: 128M
+
+  reader:
+    build: ./reader
+    volumes:
+      - shared_data:/data
+    depends_on:
+      writer:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
+
+volumes:
+  shared_data:

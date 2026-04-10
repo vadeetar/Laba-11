@@ -1,19 +1,19 @@
-# Лабораторная работа №11
-## Контейнеризация мультиязычных приложений
+# Лабораторная работа №11 – Контейнеризация мультиязычных приложений
 
 **Студент:** Тарасов Вадим Романович  
 **Группа:** 221131  
-**Вариант:** 8
+**Вариант:** 8  
 
-### Цель работы
-Освоить контейнеризацию приложений на Python и Rust, оптимизацию Docker-образов (multi-stage, scratch, кэширование), настройку healthcheck, переменных окружения, взаимодействие контейнеров через named volume и автоматическое обновление через Watchtower.
+## Цель
+Освоить multi-stage сборку, healthcheck, named volumes, кэширование зависимостей, автоматическое обновление (watchtower).
 
-### Структура проекта
-- `MidZad/` – два контейнера (writer/reader), обменивающиеся данными через именованный том.
-- `HardZad/` – многоэтапная сборка Rust-расширения для Python с финальным slim-образом, non-root, healthcheck.
-- `watchtower/` – дополнительный сервис для автоматического обновления контейнеров.
-
-### Запуск MidZad
+## Быстрый запуск
 ```bash
-cd MidZad
-docker-compose up --build
+# MidZad – обмен данными через том
+cd MidZad && docker compose up --build
+
+# HardZad – Rust+Python
+cd HardZad && docker build -t hardzad . && docker run -p 8000:8000 hardzad
+
+# Watchtower – автообновление (отдельно)
+cd watchtower && docker compose up -d
